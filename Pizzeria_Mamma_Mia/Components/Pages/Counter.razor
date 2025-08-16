@@ -5,13 +5,52 @@
 
 <h1>Counter</h1>
 
+<!--@currentCount: Example of rendering of C# expression -->
+<!--You can also use @(currentCount) and it will work-->
 <p role="Status">Current Count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click Me</button>
+
+<!-- Event handling using @on attribute -->
+<!-- Start with @on and end with some event name; @onclick, @onchange, @oninput, etc -->
+<!-- Method: @onclick="IncrementCount" -->
+<!-- Lambda: @onclick="() => currentCount++" -->
+<button class="btn btn-primary" @onclick="() => currentCount += 10">Click Me</button>
+
+
+<!-- Example of control flow to render content based off of logic with C# -->
+@if (currentCount > 30)
+{
+	<p>Count is greater than 30</p>
+}
+
+
+<!-- Example of an event handler> 
+	<input @onchange="InputChanged" />
+	<p>@message</p>
+
+	@code {
+		string message = "";
+
+		void InputChanged(ChangeEventArgs e)
+		{
+			message = (string)e.Value;
+		}
+	}
+----------------------------- -->
+
+<!-- Example of a loop> --------
+	@foreach (var item in items)
+	{
+			<li>@item.Name</li>
+	}
+	</ul>
+----------------------------- -->
+
 
 @code {
 	private int currentCount = 0;
 
+	//allows IncrementAmount to be set from the parent component
 	[Parameter]
 	public int IncrementAmount { get; set; } = 1;
 
