@@ -1,5 +1,5 @@
 ﻿@page "/counter"
-@rendermode InteractiveServer
+@rendermode InteractiveServer // Allows the component to be interactive on the server side
 
 <PageTitle>Counter</PageTitle>
 
@@ -16,15 +16,27 @@
 <!-- Lambda: @onclick="() => currentCount++" -->
 <button class="btn btn-primary" @onclick="() => currentCount += 10">Click Me</button>
 
-
-<!-- Example of control flow to render content based off of logic with C# -->
+<!-- Control flow to render content based off of logic with C# -->
 @if (currentCount > 30)
 {
 	<p>Count is greater than 30</p>
 }
 
+@code {
+	private int currentCount = 0;
 
-<!-- Example of an event handler> 
+	//allows IncrementAmount to be set from the parent component
+	[Parameter]
+	public int IncrementAmount { get; set; } = 1;
+
+	private void IncrementCount()
+	{
+		currentCount += IncrementAmount;
+	}
+}
+
+
+<!-- Example of an event handler>
 	<input @onchange="InputChanged" />
 	<p>@message</p>
 
@@ -39,23 +51,20 @@
 ----------------------------- -->
 
 <!-- Example of a loop> --------
+	<ul>
 	@foreach (var item in items)
 	{
-			<li>@item.Name</li>
+		<li>@item.Name</li>
 	}
 	</ul>
 ----------------------------- -->
 
+<!-- Example of data binding --------
+	<input @bind="text" />
+	<button @onclick="() => text = string.Empty">Clear</button>
+	<p>@text</p>
 
-@code {
-	private int currentCount = 0;
-
-	//allows IncrementAmount to be set from the parent component
-	[Parameter]
-	public int IncrementAmount { get; set; } = 1;
-
-	private void IncrementCount()
-	{
-		currentCount += IncrementAmount;
+	@code {
+		string text = "";
 	}
-}
+----------------------------- -->
